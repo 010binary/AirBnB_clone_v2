@@ -9,11 +9,13 @@ import models
 
 
 place_amenity = Table("place_amenity", Base.metadata,
-                      Column("place_id", String(60),
+                      Column("place_id",
+                             String(60),
                              ForeignKey("places.id"),
                              primary_key=True,
                              nullable=False),
-                      Column("amenity_id", String(60),
+                      Column("amenity_id",
+                             String(60),
                              ForeignKey("amenities.id"),
                              primary_key=True,
                              nullable=False))
@@ -58,15 +60,15 @@ class Place(BaseModel, Base):
         @property
         def reviews(self):
             """ Returns list of reviews.id """
-            var = models.storage.all()
-            lista = []
+            vare = models.storage.all()
+            lst = []
             result = []
-            for key in var:
+            for key in vare:
                 review = key.replace('.', ' ')
                 review = shlex.split(review)
                 if (review[0] == 'Review'):
-                    lista.append(var[key])
-            for elem in lista:
+                    lst.append(vare[key])
+            for elem in lst:
                 if (elem.place_id == self.id):
                     result.append(elem)
             return (result)
