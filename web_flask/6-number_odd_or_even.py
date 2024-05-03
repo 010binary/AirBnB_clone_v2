@@ -1,60 +1,64 @@
 #!/usr/bin/python3
 """
-data processing
+this just starts a flask web application
+and returns HBNB with Hello HBNB!
 """
 
-
-from flask import Flask, render_template
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
 
-@app.route('/', strict_slashes=False)
-def hbnb_route():
-    """prints Hello HBNB"""
+@app.route("/")
+def hello():
+    """Just returns Hello"""
     return "Hello HBNB!"
 
 
-@app.route('/hbnb', strict_slashes=False)
+@app.route("/hbnb")
 def hbnb():
-    """prints HBNB"""
+    """print HBNB"""
     return "HBNB"
 
 
-@app.route('/c/<string:text>', strict_slashes=False)
-def c_text(text):
-    """prints C followed by <text> content"""
+@app.route("/c/<text>", strict_slashes=False)
+def c(text):
+    """Just print anything along sides c"""
     text = text.replace("_", " ")
-    return "C %s" % text
+    return f"C {text}"
 
 
-@app.route('/python', strict_slashes=False)
-@app.route('/python/<string:text>', strict_slashes=False)
-def python_text(text="is cool"):
-    """prints Python is cool"""
+@app.route("/python/", strict_slashes=False)
+@app.route("/python/<text>", strict_slashes=False)
+def python(text="is cool"):
+    """ Prints what ever text would be"""
     text = text.replace("_", " ")
-    return "Python %s" % text
+    return f"Python {text}"
 
 
-@app.route('/number/<int:n>', strict_slashes=False)
-def number_n(n):
-    """displays n if integer"""
-    return "%i is a number" % n
+@app.route("/number/<int:n>", strict_slashes=False)
+def num(n):
+    """displays only numbers"""
+    if n >= 0:
+        return f"{n} is a number"
 
 
-@app.route('/number_template/<int:n>', strict_slashes=False)
-def number_template(n):
-    """display a HTML page if n is int"""
-    return render_template('5-number.html', n=n)
+@app.route("/number_template/<int:n>", strict_slashes=False)
+def number(n):
+    """returns an html page"""
+    if n >= 0:
+        return render_template("5-number.html", n=n)
 
-@app.route('/number_odd_or_even/<int:n>')
-def html_odd_or_even(n):
-    """
-    processing to know if the data is odd or even
-    """
-    output = "even" if (n % 2 == 0) else "odd"
-    return render_template('6-number_odd_or_even.html',
-                           n=n, output=odd_or_even)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+@app.route("/number_odd_or_even/<int:n>", strict_slashes=False)
+def odd_even(n):
+    """Prints even or odd after calculations"""
+    if n % 2 == 0:
+        n = f"{n} is even"
+    else:
+        n = f"{n} is odd"
+    return render_template("6-number_odd_or_even.html", n=n)
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
