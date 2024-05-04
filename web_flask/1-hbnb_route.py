@@ -1,22 +1,23 @@
 #!/usr/bin/python3
-""" adding the /hbnb route """
+""" Write a script that starts a Flask web application:
+"""
 
 from flask import Flask
 
-app = Flask(__name__)
+app = Flask("__name__")
 
 
 @app.route('/', strict_slashes=False)
-def hbnb_route():
-    """prints Hello HBNB"""
-    return "Hello HBNB!"
+def hello():
+    """Return a given a type string"""
+    return ("Hello HBNB!")
 
 
-@app.route('/hbnb', strict_slashes=False)
+@app.route("/hbnb", strict_slashes=False)
 def hbnb():
-    """prints HBNB"""
-    return "HBNB"
+    """Returns a given a type string"""
+    return ("HBNB")
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0" port=5000)
+    app.run(host="0.0.0.0", port=5000, debug=None)
